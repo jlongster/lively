@@ -1,5 +1,5 @@
 
-[Demo page]()
+[Demo page](https://jlongster.github.io/lively/)
 
 This is an experiment to improve two things in React:
 
@@ -148,10 +148,10 @@ isn't on by default in prod, I'd like to tell the user that they could
 turn on a "verbose" mode and send me a recording if possible.
 
 Check out the demos.
-[Here is the override state demo](http://localhost:3000/#override-state).
+[Here is the override state demo](https://jlongster.github.io/lively/#override-state).
 I'm able to force the autocomplete dropdown to be open.
 
-The rest of them involve recording. The next one (Log state) simply
+The rest of them involve recording. The next one ([Log state](https://jlongster.github.io/lively/#log-state)) simply
 logs the state in the devtools as it changes over time. This is
 achieved by simply wrapping the subtree that I'm interested in with
 the `Recorder` component:
@@ -172,7 +172,7 @@ React devtools could do all of this. Usually I'm only really
 interested in a small subtree though, and it's really nice to be able
 to scope it.
 
-The next demo (Undo state) shows how you can implement undo
+The next demo ([Undo state](https://jlongster.github.io/lively/#undo-state)) shows how you can implement undo
 functionality with this. Without the form knowing, you can enhance it
 with undo functionality this this:
 
@@ -192,7 +192,7 @@ function undo({ refs }) {
 See `Undo.js` for the details. I am well aware that this is probably
 not practical in the real-world though, too many complications.
 
-The last demo (View state) shows how you could display an inline
+The last demo ([View state](https://jlongster.github.io/lively/#view-state)) shows how you could display an inline
 object inspector to show the state and props of a subtree. See the
 `StateViewer.js` component for the implementation, and just like
 before, it's as easy as wrapping a subtree:
