@@ -31,6 +31,10 @@ function makeBag(inst) {
 
 function makeUpdater(inst, context) {
   return (func, ...staticArgs) => (...args) => {
+    // TODO: This should be memoized so passing the same args in
+    // always returns the exact same function instance (but with an
+    // upper limit, like only memoize 20 at a time).
+
     const bag = makeBag(inst);
     const newState = func(bag, ...staticArgs, ...args);
     if (newState) {
@@ -76,6 +80,7 @@ function createComponent(component, lifecycleMethods) {
       if (this.state !== undefined) {
         recordState(this, context);
       }
+      this._refs = {};
       this._updater = makeUpdater(this, this.context);
     }
 
@@ -126,11 +131,6 @@ function createComponent(component, lifecycleMethods) {
 }
 
 export default function lively(componentOrFunction, lifecycleMethods) {
-  if (lifecycleMethods === undefined) {
-    const func = componentOrFunction;
-    return func(createComponent);
-  } else {
-    const component = componentOrFunction;
-    return createComponent(component, lifecycleMethods);
-  }
+  const component = componentOrFunction;
+  return createComponent(component, lifecycleMethods || {});
 }
