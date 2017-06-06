@@ -1,4 +1,8 @@
 
+**Note**: Do not use, or even plan to use, this. I'm just explaining
+some ideas I have and giving code to back it up. I don't plan on
+marketing or fleshing out this repo at all.
+
 [Demo page](https://jlongster.github.io/lively/)
 
 This is an experiment to improve two things in React:
