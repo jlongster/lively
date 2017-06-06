@@ -3,13 +3,14 @@
 
 This is an experiment to improve two things in React:
 
-1. The component interface - avoid classes and embrace a more
+1. **The component interface** - avoid classes and embrace a more
 functional way of defining components with state, lifecycles, and refs
-2. State exposure - provide deeper tools to exploring state at runtime
+2. **State exposure** - provide deeper tools to exploring state at runtime
 
 This is born out of a lot of experience with React, and while working
 on a new product I desired to avoid many minor frustrations that I've
-experienced before.
+experienced before. I have been using this in an existing product and
+while it's still early, I've been loving it.
 
 The biggest thing I want to avoid is classes. They are verbose,
 error-prone, and hard to compose. Let me talk through that a little bit:
@@ -175,7 +176,7 @@ The next demo (Undo state) shows how you can implement undo
 functionality with this. Without the form knowing, you can enhance it
 with undo functionality this this:
 
-```
+```js
 function undo({ refs }) {
   refs.undo.undo();
 }
@@ -196,7 +197,7 @@ object inspector to show the state and props of a subtree. See the
 `StateViewer.js` component for the implementation, and just like
 before, it's as easy as wrapping a subtree:
 
-```
+```js
 <StateViewer>
   <Form style={{ marginTop: 20 }} />
   Outside of the form: <Input name="outside" />
