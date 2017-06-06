@@ -110,6 +110,12 @@ render function itself is given this bag (so you could pull off refs
 or inst too). `updater` is only available in the render function
 though.
 
+All updater methods and the `componentWillReceiveProps` hook update
+the state by simply returning new state. You never manually call
+`setState`. This is nice for several reasons: the confusing about what
+is the current state goes away, and we can restrict when it can be
+updated (can't ever call `setState` in `componentDidUpdate`).
+
 See
 [`Input.js`](https://github.com/jlongster/lively/blob/master/examples/src/Input.js)
 and
