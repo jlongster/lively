@@ -55,7 +55,7 @@ error-prone, and hard to compose. Let me talk through that a little bit:
   or not?)
 
 This is what kickstarted this project; it's a new component interface
-that is all functions. I started with own thing, and then drew
+that is all functions. I started with my own thing, and then drew
 inspiration from reason-react. What I had at first wasn't too
 different; the main thing I stole was the `updater` idea.
 
@@ -87,6 +87,7 @@ function getInitialState({ props }) {
 function Input({ props: { type }, state: { value }, updater }) {
   return <input type={type} value={value} onChange={updater(onChange)} />
 }
+
 export default lively(Input, { getInitialState });
 ```
 
@@ -104,12 +105,17 @@ arguments after it. The bag consist of these props:
 * `state` - The state
 * `refs` - Any refs
 
-All lifecycle methods and callbacks are given this bag.
-(`getInitialState` is only given a "partial" bag because the component
-hasn't been fully created yet; it has `props` and `inst`).
+All lifecycle methods and callbacks are given this bag. In fact, the
+render function itself is given this bag (so you could pull off refs
+or inst too). `updater` is only available in the render function
+though.
 
-See `Input.js` and `Form.js` in the examples folder for more examples,
-and see them running on the demo page.
+See
+[`Input.js`](https://github.com/jlongster/lively/blob/master/examples/src/Input.js)
+and
+[`Form.js`](https://github.com/jlongster/lively/blob/master/examples/src/Form.js)
+in the examples folder for more examples, and see them running on the
+demo page.
 
 ## State
 
@@ -156,6 +162,8 @@ logs the state in the devtools as it changes over time. This is
 achieved by simply wrapping the subtree that I'm interested in with
 the `Recorder` component:
 
+[Recorder.js](https://github.com/jlongster/lively/blob/master/examples/src/Recorder.js)
+
 ```js
 <Recorder>
   <Input value={5} />
@@ -176,6 +184,8 @@ The next demo ([Undo state](https://jlongster.github.io/lively/#undo-state)) sho
 functionality with this. Without the form knowing, you can enhance it
 with undo functionality this this:
 
+[Undo.js](https://github.com/jlongster/lively/blob/master/examples/src/Undo.js)
+
 ```js
 function undo({ refs }) {
   refs.undo.undo();
@@ -190,12 +200,16 @@ function undo({ refs }) {
 ```
 
 See `Undo.js` for the details. I am well aware that this is probably
-not practical in the real-world though, too many complications.
+not practical in the real-world though, too many complications. (Since
+we're not tracking the reconciled tree, this wouldn't actually work if
+the tree changes).
 
 The last demo ([View state](https://jlongster.github.io/lively/#view-state)) shows how you could display an inline
 object inspector to show the state and props of a subtree. See the
 `StateViewer.js` component for the implementation, and just like
 before, it's as easy as wrapping a subtree:
+
+[StateViewer.js](https://github.com/jlongster/lively/blob/master/examples/src/StateViewer.js)
 
 ```js
 <StateViewer>
