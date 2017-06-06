@@ -96,9 +96,11 @@ To add lifecycle methods, you pass them in as the second arg to
 we pull off the props and state separately, and add an `onChange` handler.
 
 `updater` is a function that will take a function and turn it into a
-callback for that component. The new function will take a "component
-bag" (see the `onChange` function) as the first arg, and any passed
-arguments after it. The bag consist of these props:
+callback for that component (it is **memoized** so given the same
+args, it'll always return the same function instance which is great
+for prop diffing). The new function will take a "component bag" (see the
+`onChange` function) as the first arg, and any passed arguments after
+it. The bag consist of these props:
 
 * `inst` - The component instance (so you can have instance vars if needed)
 * `props` - The props
