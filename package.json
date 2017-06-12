@@ -1,0 +1,27 @@
+{
+  "name": "lively",
+  "version": "0.0.1",
+  "main": "dist/lively.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "scripts": {
+    "build": "babel lively.js > dist/lively.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlongster/lively.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jlongster/lively/issues"
+  },
+  "homepage": "https://github.com/jlongster/lively#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.5.2"
+  }
+}

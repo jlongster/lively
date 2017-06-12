@@ -60,7 +60,7 @@ function createComponent(component, lifecycleMethods) {
   validateLifecycleMethods(name, lifecycleMethods);
 
   class Wrapper extends React.Component {
-    displayName: name;
+    static displayName = name;
     static contextTypes = {
       recordState: PropTypes.func
     };
@@ -130,7 +130,10 @@ function createComponent(component, lifecycleMethods) {
   return Wrapper;
 }
 
-export default function lively(componentOrFunction, lifecycleMethods) {
-  const component = componentOrFunction;
+export default function lively(component, lifecycleMethods) {
   return createComponent(component, lifecycleMethods || {});
+}
+
+export function scope(func) {
+  func(createComponent);
 }
