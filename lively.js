@@ -45,6 +45,10 @@ function arrayShallowEqual(x, y) {
 const instCache = new Map();
 function makeUpdater(inst) {
   return (func, ...staticArgs) => {
+    if(!func) {
+      throw new Error("Null function passed into updater");
+    }
+
     let c = instCache.get(inst);
     if (c) {
       c = c.get(func);

@@ -1,9 +1,10 @@
 {
   "name": "lively",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "main": "dist/lively.js",
   "directories": {
     "doc": "docs",
+    "dist": "dist",
     "example": "examples"
   },
   "scripts": {
