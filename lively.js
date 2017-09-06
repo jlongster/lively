@@ -7,7 +7,8 @@ const lifecycleMethods = [
   'componentWillUnmount',
   'componentWillReceiveProps',
   'componentDidUpdate',
-  'shouldComponentUpdate'
+  'shouldComponentUpdate',
+  'getChildContext'
 ];
 
 function validateLifecycleMethods(componentName, methods) {
@@ -25,6 +26,7 @@ function makeBag(inst) {
     inst,
     props: inst.props,
     state: inst.state,
+    context: inst.context,
     refs: inst._refs,
     setState: inst._setState
   };
@@ -45,8 +47,8 @@ function arrayShallowEqual(x, y) {
 const instCache = new Map();
 function makeUpdater(inst) {
   return (func, ...staticArgs) => {
-    if(!func) {
-      throw new Error("Null function passed into updater");
+    if (!func) {
+      throw new Error('Null function passed into updater');
     }
 
     let c = instCache.get(inst);
@@ -60,7 +62,12 @@ function makeUpdater(inst) {
           }
         } else {
           for (let key of c.keys()) {
-            if (arrayShallowEqual(key, staticArgs)) {
+            if (
+              key != null &&
+              typeof key !== 'string' &&
+              key.length != undefined &&
+              arrayShallowEqual(key, staticArgs)
+            ) {
               return c.get(key);
             }
           }
@@ -114,9 +121,8 @@ function createComponent(component, lifecycleMethods = {}) {
 
   class Wrapper extends React.Component {
     static displayName = name;
-    static contextTypes = {
-      recordState: PropTypes.func
-    };
+    static contextTypes = component.contextTypes;
+    static childContextTypes = component.childContextTypes;
 
     constructor(props, context) {
       super(props);
@@ -163,6 +169,7 @@ function createComponent(component, lifecycleMethods = {}) {
         props: this.props,
         state: this.state,
         refs: this._refs,
+        context: this.context,
         updater: this._updater,
         setState: this._setState
       });
@@ -187,6 +194,13 @@ function createComponent(component, lifecycleMethods = {}) {
       };
     }
   });
+
+  if (lifecycleMethods.getChildContext) {
+    Wrapper.prototype.getChildContext = function(...args) {
+      const bag = makeBag(this);
+      return lifecycleMethods.getChildContext(bag, ...args);
+    };
+  }
 
   return Wrapper;
 }
